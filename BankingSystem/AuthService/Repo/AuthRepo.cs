@@ -67,13 +67,15 @@ namespace AuthService.Repo
                 //var key = new SymmetricSecurityKey(keyBytes);
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+                var audiences = _configuration.GetSection("JWTToken:Audiences").Get<string[]>();
+
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.UtcNow.AddHours(1),
                     SigningCredentials = creds,
-                    Issuer = "https://localhost:7257",
-                    Audience = "https://localhost:7257"
+                    Issuer = _configuration["JWTToken:Issuer"],
+                    Audience = audiences?.FirstOrDefault()
                 };
 
                 var tokenHandler = new JwtSecurityTokenHandler();

@@ -5,10 +5,13 @@ namespace AccountService.Models.ResponseModels
 {
     public class AccountRes
     {
+        public int AccountId { get; set; }
         public int AccountNumber { get; set; }
-        public decimal AccountBalance { get; set; }
-        public AccountType AccountType { get; set; }
         public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
+        public decimal AccountBalance { get; set; }
+        public string AccountType { get; set; }
+        public bool IsFrozen { get; set; } = false;
+        public DateTime CreatedDate { get; set; }
+        public DateTime AccUpdateDateTime { get; set; } 
     }
 }

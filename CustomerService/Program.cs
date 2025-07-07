@@ -16,20 +16,23 @@ builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
-var app = builder.Build();
 
-app.UseCors(options =>
+builder.Services.AddCors(options => 
 {
-    options.AllowAnyOrigin()
+    options.AddPolicy("AllowAll", builder =>
+    builder.AllowAnyOrigin()
            .AllowAnyMethod()
-           .AllowAnyHeader();
+           .AllowAnyHeader());
 });
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("AllowAll");
 }
 
 app.UseHttpsRedirection();

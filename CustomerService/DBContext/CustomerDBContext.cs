@@ -11,6 +11,14 @@ namespace CustomerService.DBContext
         }
 
         public DbSet<Customer> Customers { get; set; }
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .Property(cust => cust.CustomerId)
+                .UseIdentityColumn(seed: 2101, increment: 1);
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

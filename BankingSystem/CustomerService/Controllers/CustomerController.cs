@@ -1,5 +1,6 @@
 ﻿using CustomerService.Models;
 using CustomerService.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace CustomerService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class CustomerController : ControllerBase
     {
 
@@ -34,7 +36,8 @@ namespace CustomerService.Controllers
 
 
         [HttpPost("CreateCustomer")]
-        public async Task<ActionResult<Customer>> CreateCustomer(Customer customer)
+        [Authorize]
+        public async Task<ActionResult<Customer>> CreateCustomer([FromBody]Customer customer)
         {
             var existingCustomer = await _customerRepo.GetCustomer(customer.CustomerId);
             if (existingCustomer != null)

@@ -48,11 +48,15 @@ namespace CustomerService.Repo
             {
                 return null;
             }
+            /*if(existingCustomer.CustomerStatus == CustomerStatus.Activate)
+            {
 
+            }*/
             existingCustomer.CustomerName = customer.CustomerName;
             existingCustomer.CustomerEmail = customer.CustomerEmail;
             existingCustomer.CustomerMobile = customer.CustomerMobile;
             existingCustomer.CustomerAddress = customer.CustomerAddress;
+            //existingCustomer.CustomerStatus = customer.CustomerStatus;
 
             try
             {

@@ -10,24 +10,16 @@ namespace AccountService.DBContext
         }
 
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>()
-                .HasIndex(u => u.AccountNumber)
-                .IsUnique();
+                .Property(acc => acc.AccountId)
+                .UseIdentityColumn(seed: 1101, increment: 1);
 
             modelBuilder.Entity<Account>()
-                .Property(u => u.AccountId)
-                .ValueGeneratedOnAdd()
-                .HasAnnotation("SqlServer:Identity", "101, 1");
-
-            modelBuilder.Entity<Account>()
-                .HasOne(a => a.Customer)
-                .WithMany()
-                .HasForeignKey(a => a.CustomerId);
-
+                .Property(a => a.AccountType)
+                .HasConversion<string>();
             base.OnModelCreating(modelBuilder);
         }
     }

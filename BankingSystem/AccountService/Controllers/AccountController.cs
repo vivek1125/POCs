@@ -46,7 +46,7 @@ namespace AccountService.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Account>> CreateAccount(Account account)
+        public async Task<ActionResult<Account>> CreateAccount(Account account, AccountType accountType)
         {
             if (account == null)
             {

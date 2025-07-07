@@ -1,5 +1,6 @@
 ﻿using CustomerService.Models;
 using CustomerService.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

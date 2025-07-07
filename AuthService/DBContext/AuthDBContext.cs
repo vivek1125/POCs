@@ -14,24 +14,13 @@ namespace AuthService.DBContext
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<User>()
-             .HasIndex(u => u.UserName)
-             .IsUnique();
-
+                .Property(usr => usr.Id)
+                .UseIdentityColumn(seed: 101, increment: 1);
             modelBuilder.Entity<User>()
-            .Property(u => u.Id)
-            .ValueGeneratedOnAdd()
-            .HasAnnotation("SqlServer:Identity", "101, 1");
-
-            var converter = new EnumToStringConverter<UserRole>();
-
-            modelBuilder.Entity<User>()
-            .Property(u => u.Role)
-            .HasConversion(converter);
-
+                .Property(a => a.Role)
+                .HasConversion<string>();
             base.OnModelCreating(modelBuilder);
-
         }
     }
 }

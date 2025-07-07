@@ -1,4 +1,5 @@
 ﻿using AccountService.Models;
+using AccountService.Models.RequestModels;
 using AccountService.Models.ResponseModels;
 
 namespace AccountService.Repo
@@ -6,11 +7,11 @@ namespace AccountService.Repo
     public interface IAccountRepo
     {
         Task<Account> GetAccountDetails(int accNumber);
-        Task<Account> CreateAccount(Account account);
+        Task<AccountRes> CreateAccount(AccountReq account);
 
-        Task<Account> UpdateAccountBalance(int accountNumber,decimal balance);
+        Task<Account> UpdateAccountBalance(int accountNumber,decimal balance, DateTime updatedOn);
 
         Task<bool> DeleteAccount(int accountNumber);
-        Task<CustomerAccount> GetCustomerDetails(int accountNumber);
+        Task<AccountCustomerDTOs> GetCustomerDetails(int accountNumber);
     }
 }
