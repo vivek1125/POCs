@@ -1,0 +1,19 @@
+{
+  "GlobalConfiguration": {
+    "BaseUr1": "https://localhost:7205"
+  },
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/Auth/GetAllUsers",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/Auth/GetAllUsers",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7201
+        }
+      ]
+    }
+  ]
+}
