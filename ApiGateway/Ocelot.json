@@ -1,6 +1,6 @@
 {
   "GlobalConfiguration": {
-    "BaseUr1": "https://localhost:7205"
+    "BaseUrl": "https://localhost:7205"
   },
   "Routes": [
     {

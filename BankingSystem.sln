@@ -1,15 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{B10F7727-8662-4CA0-8EFC-CDCE6EC55B26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{B10F7727-8662-4CA0-8EFC-CDCE6EC55B26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerService", "CustomerService\CustomerService.csproj", "{1C544289-EF7F-4A55-AF25-A45DD91159FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerService", "CustomerService\CustomerService.csproj", "{1C544289-EF7F-4A55-AF25-A45DD91159FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService", "AccountService\AccountService.csproj", "{9F6B353F-17CA-4C6E-8E19-8364AF462678}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountService", "AccountService\AccountService.csproj", "{9F6B353F-17CA-4C6E-8E19-8364AF462678}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService", "TransactionService\TransactionService.csproj", "{0EBDFFEA-EE11-41C2-AD4D-1C2BB1047275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionService", "TransactionService\TransactionService.csproj", "{0EBDFFEA-EE11-41C2-AD4D-1C2BB1047275}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{48930B77-0067-4EFE-BEBA-74827710E451}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9F2A3613-028D-43D2-9DFC-BA4030AAF510}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionService.Tests", "TransactionService.Tests\TransactionService.Tests.csproj", "{3C7A294A-F26D-48EE-997D-383CEBCF027D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{AE1B7B06-CB8D-48AD-8921-E776B19188FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +41,23 @@ Global
 		{0EBDFFEA-EE11-41C2-AD4D-1C2BB1047275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EBDFFEA-EE11-41C2-AD4D-1C2BB1047275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EBDFFEA-EE11-41C2-AD4D-1C2BB1047275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C7A294A-F26D-48EE-997D-383CEBCF027D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C7A294A-F26D-48EE-997D-383CEBCF027D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C7A294A-F26D-48EE-997D-383CEBCF027D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C7A294A-F26D-48EE-997D-383CEBCF027D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE1B7B06-CB8D-48AD-8921-E776B19188FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE1B7B06-CB8D-48AD-8921-E776B19188FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE1B7B06-CB8D-48AD-8921-E776B19188FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE1B7B06-CB8D-48AD-8921-E776B19188FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C544289-EF7F-4A55-AF25-A45DD91159FB} = {48930B77-0067-4EFE-BEBA-74827710E451}
+		{9F6B353F-17CA-4C6E-8E19-8364AF462678} = {48930B77-0067-4EFE-BEBA-74827710E451}
+		{0EBDFFEA-EE11-41C2-AD4D-1C2BB1047275} = {48930B77-0067-4EFE-BEBA-74827710E451}
+		{3C7A294A-F26D-48EE-997D-383CEBCF027D} = {9F2A3613-028D-43D2-9DFC-BA4030AAF510}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {722F6D04-8DBE-42B8-8B1E-ED29FB72DF07}
