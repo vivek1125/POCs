@@ -5,6 +5,7 @@ namespace TransactionService.Repo
 {
     public interface ITransRepo
     {
-        Task<Transaction> UpdateAmount(int accNumber, decimal balance, TransactionType transactionType, TransactionMode transactionMode);
+        Task<Transaction> UpdateAmount(int accNumber, decimal balance, TransactionType transactionType, TransactionMode transactionMode,string jwtToken);
+        Task<List<Transaction>> GetTransaction(int accNumber);
     }
 }

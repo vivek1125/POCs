@@ -1,7 +1,9 @@
-﻿using AccountService.Models;
+﻿using AccountService.ApiServices;
+using AccountService.Models;
 using AccountService.Models.RequestModels;
 using AccountService.Models.ResponseModels;
 using AccountService.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 
@@ -11,6 +13,7 @@ namespace AccountService.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountRepo _accountrepo;
@@ -36,7 +39,9 @@ namespace AccountService.Controllers
         [HttpGet("getCustomer")]
         public async Task<ActionResult<AccountCustomerDTOs>> GetCustomerDetailsByAccNo(int account_NumberOrCust_Id)
         {
-            var customerDetail = await _accountrepo.GetCustomerDetails(account_NumberOrCust_Id);
+            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var customerDetail = await _accountrepo.GetCustomerDetails(account_NumberOrCust_Id, jwtToken);
             if (customerDetail != null)
             {
                 return Ok(customerDetail);
@@ -45,31 +50,35 @@ namespace AccountService.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<AccountRes>> CreateAccount(AccountReq account)
         {
+            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            
             if (account != null)
             {
-                var createdAccount = await _accountrepo.CreateAccount(account);
+                var createdAccount = await _accountrepo.CreateAccount(account, jwtToken);
                 if (createdAccount != null)
                 {
                     return CreatedAtAction(nameof(GetAccountByNumber), new { accountNumber = createdAccount.AccountNumber }, createdAccount);
                 }
             }
-            return BadRequest("Failed to Create Account !");
+            return BadRequest("Failed to Create Account !!");
         }
 
         [HttpPatch]
         public async Task<ActionResult<Account>> UpdateBalance(int accountNumber, decimal balance,DateTime updatedOn)
         {
+            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             if (balance != 0)
             {
-                var accountUpdatedBalance = await _accountrepo.UpdateAccountBalance(accountNumber,balance,updatedOn);
+                var accountUpdatedBalance = await _accountrepo.UpdateAccountBalance(accountNumber,balance,updatedOn, jwtToken);
                 if (accountUpdatedBalance != null)
                 {
                     return accountUpdatedBalance;
                 }
             }
-            return BadRequest("failed to Uodate balance!");
+            return BadRequest("failed to Update balance!");
         }
 
         [HttpDelete]
@@ -81,6 +90,19 @@ namespace AccountService.Controllers
                 return BadRequest("Account Deletion Filed!");
             }
             return Ok("Account deleted!");
+        }
+
+        [HttpPatch("UnFreeze")]
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> UnFreeze(int accountNumber)
+        {
+            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var accountStatus = await _accountrepo.UpdateAccountStatus(accountNumber, jwtToken);
+            if (accountStatus)
+            {
+                return Ok("Now Account is Activate!!!");
+            }
+            return BadRequest("failed to Update Status!");
         }
     }
 }

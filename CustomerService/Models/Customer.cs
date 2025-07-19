@@ -14,6 +14,7 @@ namespace CustomerService.Models
         public string CustomerMobile { get; set; }
 
         public string CustomerAddress { get; set; }
-        //public CustomerStatus CustomerStatus { get; set; }
+        //public CustomerStatus CustomerStatus { get; set; } = CustomerStatus.Activate;
+        public string CustomerStatus { get; set; } = "Active";
     }
 }

@@ -24,20 +24,21 @@ namespace AuthService.Controllers
         }
 
         [HttpGet("getUser")]
-        [Authorize]
         public async Task<ActionResult<LogInRes>> GetUserByUserName(string userName)
         {
-            var existingUser = await _authRepo.getUser(userName);
+            var existingUser = await _authRepo.GetUser(userName);
             if(existingUser == null)
             {
                 return BadRequest("User Not Found!");
             }
-
+            UserRole userRole = existingUser.Role;
+            string userRolestr = Enum.GetName(typeof(UserRole), userRole);
             var res = new LogInRes
             {
                 UserName = existingUser.UserName,
                 Email = existingUser.Email,
-                Role = existingUser.Role
+                Role = userRolestr,//.ToString()
+                Token = "*********************"
             };
 
             return Ok(res);

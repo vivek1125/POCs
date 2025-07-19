@@ -13,6 +13,12 @@ namespace AccountService.ApiServices
             _httpClient = httpClient;
             _configuration = configuration;
         }
+
+        public async Task SetJwtToken(string jwtToken)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwtToken);
+        }
+
         public async Task<Customer?> GetCustomerAsync(int customerId)
         {
             var response = await _httpClient.GetAsync($"/api/Customer/GetCustomer?id={customerId}");

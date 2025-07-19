@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerService.Migrations
 {
     [DbContext(typeof(CustomerDBContext))]
-    [Migration("20250709141852_initialCustomer")]
+    [Migration("20250719093839_initialCustomer")]
     partial class initialCustomer
     {
         /// <inheritdoc />
@@ -45,6 +45,10 @@ namespace CustomerService.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

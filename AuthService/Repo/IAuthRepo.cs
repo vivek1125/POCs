@@ -8,7 +8,6 @@ namespace AuthService.Repo
     {
         Task<User> Register(Registration registration);
         Task<LogInRes> Login(LogInReq logInReq);
-
-        Task<User> getUser(string userName);
+        Task<User> GetUser(string userName);
     }
 }

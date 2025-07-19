@@ -16,7 +16,9 @@ builder.Services.AddDbContext<AuthDBContext>(options =>
 builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(
+builder.Services.AddSwaggerGen();
+#region Validation
+/*builder.Services.AddSwaggerGen(
     option =>
     {
         option.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
@@ -45,7 +47,7 @@ builder.Services.AddSwaggerGen(
         });
     }
 );
-
+*/
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -58,6 +60,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+
+
+#endregion
 
 var app = builder.Build();
 

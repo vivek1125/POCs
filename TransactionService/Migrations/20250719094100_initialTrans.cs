@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TransactionService.Migrations
 {
     /// <inheritdoc />
-    public partial class initialTransaction : Migration
+    public partial class initialTrans : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

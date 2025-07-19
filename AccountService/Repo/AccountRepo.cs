@@ -3,6 +3,7 @@ using AccountService.DBContext;
 using AccountService.Models;
 using AccountService.Models.RequestModels;
 using AccountService.Models.ResponseModels;
+using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Repo
@@ -30,13 +31,19 @@ namespace AccountService.Repo
             }
             return account;
         }
-        public async Task<AccountRes> CreateAccount(AccountReq account)
+        public async Task<AccountRes> CreateAccount(AccountReq account, string jwtToken)
         {
             // To Insert into DatabAse
+            _customerApiClient.SetJwtToken(jwtToken);
+            var customers = await _customerApiClient.GetCustomerAsync(account.CustomerId);
+            if (customers.CustomerStatus != "Active")
+            {
+                return null;
+            }
+
             var newAccount = new Account
             {
                 CustomerId = account.CustomerId,
-                AccountNumber = account.AccountNumber,
                 AccountBalance = account.AccountBalance,
                 IsFrozen = false
             };
@@ -55,13 +62,12 @@ namespace AccountService.Repo
             {
                 return null;
             }
-            
+
             // For Response to API
             var accRes = new AccountRes
             {
-                AccountId = ExistingAccount.Entity.AccountId,
-                CustomerId = ExistingAccount.Entity.CustomerId,
                 AccountNumber = ExistingAccount.Entity.AccountNumber,
+                CustomerId = ExistingAccount.Entity.CustomerId,
                 AccountBalance = ExistingAccount.Entity.AccountBalance,
                 AccountType = account.AccountType,
                 IsFrozen = false,
@@ -80,10 +86,28 @@ namespace AccountService.Repo
             }
         }
 
-        public async Task<Account> UpdateAccountBalance(int accountNumber, decimal balance, DateTime updatedOn)
+        public async Task<Account> UpdateAccountBalance(int accountNumber, decimal balance, DateTime updatedOn,string jwtToken)
         {
+
             var existingAccount = await GetAccountDetails(accountNumber);
-            if (existingAccount == null)
+            _customerApiClient.SetJwtToken(jwtToken);
+            // check customer is  Active or Not !!! Frezee if trying to fetch balance or update
+            var customers = await _customerApiClient.GetCustomerAsync(existingAccount.CustomerId);
+            if (customers.CustomerStatus != "Active")
+            {
+                existingAccount.IsFrozen = true;
+                try
+                {
+                    await _dBContext.SaveChangesAsync();
+                    return null;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            if (existingAccount.IsFrozen || existingAccount == null)
             {
                 return null;
             }
@@ -113,21 +137,23 @@ namespace AccountService.Repo
             var existingAccount = await GetAccountDetails(accountNumber);
             if (existingAccount != null)
             {
-                _dBContext.Accounts.Remove(existingAccount);
+                existingAccount.IsFrozen = true;
+                //_dBContext.Accounts.Remove(existingAccount);
                 await _dBContext.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public async Task<AccountCustomerDTOs> GetCustomerDetails(int accountNumber)
+        public async Task<AccountCustomerDTOs> GetCustomerDetails(int accountNumber, string jwtToken)
         {
+            
             var existingAccount = await GetAccountDetails(accountNumber);
             if(existingAccount== null)
             {
                 return null;
             }
-
+            _customerApiClient.SetJwtToken(jwtToken);
             var customers = await _customerApiClient.GetCustomerAsync(existingAccount.CustomerId); 
 
             if(customers == null)
@@ -137,7 +163,6 @@ namespace AccountService.Repo
 
             var customerAccount = new AccountCustomerDTOs
             {
-                AccountId = existingAccount.AccountId,
                 AccountNumber = existingAccount.AccountNumber,
                 AccountBalance = existingAccount.AccountBalance,
                 AccountType = existingAccount.AccountType,
@@ -148,11 +173,34 @@ namespace AccountService.Repo
                     CustomerName = customers.CustomerName,
                     CustomerMobile = customers.CustomerMobile,
                     CustomerEmail = customers.CustomerEmail,
-                    CustomerAddress = customers.CustomerAddress
+                    CustomerAddress = customers.CustomerAddress,
+                    CustomerStatus = customers.CustomerStatus
                 }
             };
 
             return customerAccount;
+        }
+        public async Task<bool> UpdateAccountStatus(int accountNumber, string jwtToken)
+        {
+            var existingAccount = await GetAccountDetails(accountNumber);
+
+            // check customer is  Active or Not !!! 
+            _customerApiClient.SetJwtToken(jwtToken);
+            var customers = await _customerApiClient.GetCustomerAsync(existingAccount.CustomerId);
+            if (customers.CustomerStatus != "Active")
+            {
+                return false;
+            }
+            existingAccount.IsFrozen = false;
+            try
+            {
+                await _dBContext.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

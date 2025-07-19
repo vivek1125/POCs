@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Drawing;
 
 namespace AuthService.Repo
 {
@@ -25,7 +26,7 @@ namespace AuthService.Repo
 
         public async Task<LogInRes> Login(LogInReq logInReq)
         {
-            var existingUser = await getUser(logInReq.UserName);
+            var existingUser = await GetUser(logInReq.UserName);
             if (existingUser == null)
             {
                 return null;
@@ -36,11 +37,13 @@ namespace AuthService.Repo
             }
 
             string token = generateToken(existingUser);
+            UserRole userRole = existingUser.Role;
+            string userRolestr = Enum.GetName(typeof(UserRole), userRole);
             var logInRes = new LogInRes
             {
                 UserName = existingUser.UserName,
                 Email = existingUser.Email,
-                Role = existingUser.Role,
+                Role = userRolestr,//.ToString(),
                 Token = token
             };
 
@@ -60,7 +63,8 @@ namespace AuthService.Repo
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier , value: existingUser.Id.ToString()),
-                    new Claim(ClaimTypes.Name, existingUser.UserName ?? string.Empty)
+                    new Claim(ClaimTypes.Name, existingUser.UserName ?? string.Empty),
+                    new Claim(ClaimTypes.Role, existingUser.Role.ToString())
                 };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -72,8 +76,8 @@ namespace AuthService.Repo
                     Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.UtcNow.AddHours(1),
                     SigningCredentials = creds,
-                    Issuer = "https://localhost:7257",
-                    Audience = "https://localhost:7257"
+                    Issuer = "https://localhost:7201",
+                    Audience = "https://localhost:7202",
                 };
 
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -90,7 +94,7 @@ namespace AuthService.Repo
 
         public async Task<User> Register(Registration registration)
         {
-            if (await getUser(registration.UserName) !=null)
+            if (await GetUser(registration.UserName) !=null)
             {
                 return null;
             }
@@ -109,7 +113,7 @@ namespace AuthService.Repo
             return newUser;
         }
 
-        public async Task<User> getUser(string userName)
+        public async Task<User> GetUser(string userName)
         {
             return await _dBContext.Users.FirstOrDefaultAsync(u => u.UserName == userName);
         }

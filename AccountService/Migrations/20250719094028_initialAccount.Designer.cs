@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountService.Migrations
 {
     [DbContext(typeof(AccountDBContext))]
-    [Migration("20250709141949_initialAccount")]
+    [Migration("20250719094028_initialAccount")]
     partial class initialAccount
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace AccountService.Migrations
 
             modelBuilder.Entity("AccountService.Models.Account", b =>
                 {
-                    b.Property<int>("AccountId")
+                    b.Property<int>("AccountNumber")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"), 1101L);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountNumber"), 900123L);
 
                     b.Property<DateTime>("AccUpdateDateTime")
                         .HasColumnType("datetime2");
@@ -39,10 +39,11 @@ namespace AccountService.Migrations
                     b.Property<decimal>("AccountBalance")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("AccountNumber")
-                        .HasColumnType("int");
-
                     b.Property<string>("AccountType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Bank")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -55,7 +56,7 @@ namespace AccountService.Migrations
                     b.Property<bool>("IsFrozen")
                         .HasColumnType("bit");
 
-                    b.HasKey("AccountId");
+                    b.HasKey("AccountNumber");
 
                     b.ToTable("Accounts");
                 });

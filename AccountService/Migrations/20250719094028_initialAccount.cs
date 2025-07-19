@@ -15,11 +15,11 @@ namespace AccountService.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    AccountId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1101, 1"),
+                    AccountNumber = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "900123, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    AccountNumber = table.Column<int>(type: "int", nullable: false),
                     AccountBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Bank = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AccountType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsFrozen = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -27,7 +27,7 @@ namespace AccountService.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.AccountId);
+                    table.PrimaryKey("PK_Accounts", x => x.AccountNumber);
                 });
         }
 

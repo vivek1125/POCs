@@ -5,9 +5,8 @@ namespace TransactionService.Models
 {
     public class Account
     {
-        public int AccountId { get; set; }
-        public int CustomerId { get; set; }
         public int AccountNumber { get; set; }
+        public int CustomerId { get; set; }
         public decimal AccountBalance { get; set; }
         public AccountType AccountType { get; set; }
         public bool IsFrozen { get; set; } = false;

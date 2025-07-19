@@ -6,5 +6,6 @@ namespace TransactionService.ApiServices
     {
         Task<Account?> GetAccountDetailsAsync(int accountId);
         Task<Account?> UpdateAccountAmountAsync(int accNum, decimal amount, DateTime updatedOn);
+        Task SetJwtToken(string jwtToken);
     }
 }

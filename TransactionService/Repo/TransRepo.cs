@@ -1,4 +1,6 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using Newtonsoft.Json.Linq;
 using TransactionService.ApiServices;
 using TransactionService.Common;
 using TransactionService.DBContext;
@@ -19,8 +21,9 @@ namespace TransactionService.Repo
             _accountApiClient = accountApiClient;
 
         }
-        public async Task<Transaction> UpdateBalance(int accountNumber, decimal amount, TransactionMode transactionMode, TransactionType transactionType)
+        public async Task<Transaction> UpdateBalance(int accountNumber, decimal amount, TransactionMode transactionMode, TransactionType transactionType, string jwtToken)
         {
+            _accountApiClient.SetJwtToken(jwtToken);
             var accountDetails = await _accountApiClient.GetAccountDetailsAsync(accountNumber);
             if (accountDetails == null)
             {
@@ -38,6 +41,7 @@ namespace TransactionService.Repo
                     TransactionAmount = amount,
                     TransDateTime = DateTime.Now
                 };
+                _accountApiClient.SetJwtToken(jwtToken);
                 var updateAccBalance = await _accountApiClient.UpdateAccountAmountAsync(accountNumber, balance, transaction.TransDateTime);
                 if (updateAccBalance == null)
                 {
@@ -51,6 +55,7 @@ namespace TransactionService.Repo
                 decimal balance = availableBalance - amount;
                 if (balance >= limit)
                 {
+                    // AutoMapper
                     var transaction = new Transaction
                     {
                         AccountNumber = accountNumber,
@@ -58,7 +63,8 @@ namespace TransactionService.Repo
                         TransactionType = transactionType,
                         TransactionAmount = amount,
                         TransDateTime = DateTime.Now
-                    };
+                    }; 
+                    _accountApiClient.SetJwtToken(jwtToken);
                     var updateAccBalance = await _accountApiClient.UpdateAccountAmountAsync(accountNumber, balance, transaction.TransDateTime);
                     if(updateAccBalance == null)
                     {
@@ -71,9 +77,10 @@ namespace TransactionService.Repo
             return null;
         }
 
-        public async Task<Transaction> UpdateAmount(int accNumber, decimal balance,TransactionType transactionType, TransactionMode transactionMode)
+        public async Task<Transaction> UpdateAmount(int accNumber, decimal balance,TransactionType transactionType, TransactionMode transactionMode,string jwtToken)
         {
-            var transactions = await UpdateBalance(accNumber, balance, transactionMode, transactionType);
+            
+            var transactions = await UpdateBalance(accNumber, balance, transactionMode, transactionType,jwtToken);
             
             try
             {
@@ -89,6 +96,23 @@ namespace TransactionService.Repo
                 return null;
             }
             return null;
+        }
+
+        public async Task<List<Transaction>> GetTransaction(int accNumber)
+        {
+            var transactions = await GetTransactionDetails(accNumber);
+
+            if (transactions != null)
+            {
+                var lastFive = transactions.OrderByDescending(trans => trans.TransDateTime).Take(5).ToList();
+                return lastFive;
+            }
+            return null;
+        }
+
+        private async Task<List<Transaction>> GetTransactionDetails(int accNumber)
+        {
+            return await _transactionDBContext.Transactions.Where(acc => acc.AccountNumber == accNumber).ToListAsync();
         }
     }
 }

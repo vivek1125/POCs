@@ -5,7 +5,6 @@ namespace AccountService.Models.ResponseModels
 {
     public class AccountRes
     {
-        public int AccountId { get; set; }
         public int AccountNumber { get; set; }
         public int CustomerId { get; set; }
         public decimal AccountBalance { get; set; }

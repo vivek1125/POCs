@@ -5,7 +5,6 @@ namespace AccountService.Models
 {
     public class Customer
     {
-        [Key]
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
 
@@ -14,5 +13,6 @@ namespace AccountService.Models
         public string CustomerMobile { get; set; }
 
         public string CustomerAddress { get; set; }
+        public string CustomerStatus { get; set; }
     }
 }
