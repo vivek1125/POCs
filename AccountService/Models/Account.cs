@@ -6,11 +6,11 @@ namespace AccountService.Models
     public class Account
     {
         [Key]
-        public int AccountId { get; set; }
+        public int AccountNumber { get; set; }
+
         [Required]
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-        public int AccountNumber { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal AccountBalance { get; set; }

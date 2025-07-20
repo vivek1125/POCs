@@ -14,8 +14,8 @@ namespace AccountService.DBContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>()
-                .Property(acc => acc.AccountId)
-                .UseIdentityColumn(seed: 1101, increment: 1);
+                .Property(acc => acc.AccountNumber)
+                .UseIdentityColumn(seed: 900123, increment: 1);
 
             modelBuilder.Entity<Account>()
                 .Property(a => a.AccountType)

@@ -21,7 +21,7 @@ namespace TransactionService.Controllers
             _transactionRepo = transactionRepo;
         }
 
-        [HttpPatch]
+        [HttpPatch("UpdateBalance")]
         public async Task<ActionResult<Transaction>> UpdateBalance(int accountNumber, decimal balance,string transactionType, string transactionMode)
         {
             if (balance != 0)

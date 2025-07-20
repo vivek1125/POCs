@@ -36,7 +36,6 @@ namespace AccountService.Repo
             var newAccount = new Account
             {
                 CustomerId = account.CustomerId,
-                AccountNumber = account.AccountNumber,
                 AccountBalance = account.AccountBalance,
                 IsFrozen = false
             };
@@ -59,7 +58,6 @@ namespace AccountService.Repo
             // For Response to API
             var accRes = new AccountRes
             {
-                AccountId = ExistingAccount.Entity.AccountId,
                 CustomerId = ExistingAccount.Entity.CustomerId,
                 AccountNumber = ExistingAccount.Entity.AccountNumber,
                 AccountBalance = ExistingAccount.Entity.AccountBalance,
@@ -137,7 +135,6 @@ namespace AccountService.Repo
 
             var customerAccount = new AccountCustomerDTOs
             {
-                AccountId = existingAccount.AccountId,
                 AccountNumber = existingAccount.AccountNumber,
                 AccountBalance = existingAccount.AccountBalance,
                 AccountType = existingAccount.AccountType,

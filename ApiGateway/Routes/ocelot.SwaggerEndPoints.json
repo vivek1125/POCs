@@ -1,0 +1,59 @@
+{
+	"SwaggerEndPoints": [
+		{
+			"Key": "APIGateway",
+			"TransformByOcelotConfig": false,
+			"Config": [
+				{
+					"Name": "APIGateway",
+					"Version": "1.0",
+					"Url": "https://localhost:7205/swagger/v1/swagger.json"
+				}
+			]
+		},
+		{
+			"Key": "Auth",
+			"TransformByOcelotConfig": false,
+			"Config": [
+				{
+					"Name": "Auth",
+					"Version": "1.0",
+					"Url": "https://localhost:7201/swagger/v1/swagger.json"
+				}
+			]
+		},
+		{
+			"Key": "Customer",
+			"TransformByOcelotConfig": false,
+			"Config": [
+				{
+					"Name": "Customer",
+					"Version": "1.0",
+					"Url": "https://localhost:7202/swagger/v1/swagger.json"
+				}
+			]
+		},
+		{
+			"Key": "Account",
+			"TransformByOcelotConfig": false,
+			"Config": [
+				{
+					"Name": "Account",
+					"Version": "1.0",
+					"Url": "https://localhost:7203/swagger/v1/swagger.json"
+				}
+			]
+		},
+		{
+			"Key": "Transaction",
+			"TransformByOcelotConfig": false,
+			"Config": [
+				{
+					"Name": "Transaction",
+					"Version": "1.0",
+					"Url": "https://localhost:7204/swagger/v1/swagger.json"
+				}
+			]
+		}
+	]
+}

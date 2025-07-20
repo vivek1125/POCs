@@ -27,7 +27,7 @@ namespace TransactionService.ApiServices
 
         public async Task<Account?> UpdateAccountAmountAsync(int accNum, decimal amount, DateTime updatedOn)
         {
-            string url = $"/api/Account/UpdateBalance?accountNumber={accNum}&balance={amount}&updatedOn={updatedOn}";
+            string url = $"/api/Account/UpdateBalance/UpdateBalance?accountNumber={accNum}&balance={amount}&updatedOn={updatedOn}";
             var response = await _httpClient.PatchAsync(url,null);
             if (!response.IsSuccessStatusCode) return null;
             var content = await response.Content.ReadAsStringAsync();

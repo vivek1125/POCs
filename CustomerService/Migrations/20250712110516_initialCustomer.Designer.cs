@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerService.Migrations
 {
     [DbContext(typeof(CustomerDBContext))]
-    [Migration("20250709141852_initialCustomer")]
+    [Migration("20250712110516_initialCustomer")]
     partial class initialCustomer
     {
         /// <inheritdoc />
