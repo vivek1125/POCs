@@ -80,5 +80,10 @@ namespace CustomerService.Repo
             }
             return false;
         }
+
+        public async Task<List<Customer>> GetAllCustomers()
+        {
+            return await _dBContext.Customers.ToListAsync();
+        }
     }
 }

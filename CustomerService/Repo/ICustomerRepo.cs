@@ -10,5 +10,7 @@ namespace CustomerService.Repo
         Task<Customer> UpdateCustomer(int id, Customer customer);
 
         Task<bool> DeleteCustomer(int id);
+
+        Task<List<Customer>> GetAllCustomers();
     }
 }

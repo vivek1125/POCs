@@ -10,6 +10,7 @@ namespace CustomerService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
 
@@ -31,6 +32,17 @@ namespace CustomerService.Controllers
                 return customer;
             }
             return BadRequest("Customer not found!");
+        }
+
+        [HttpGet("GetAllCustomers")]
+        public async Task<ActionResult<List<Customer>>> GetAllCustomers()
+        {
+            var customers = await _customerRepo.GetAllCustomers();
+            if (customers != null && customers.Count > 0)
+            {
+                return customers;
+            }
+            return NotFound("No customers found.");
         }
 
 
