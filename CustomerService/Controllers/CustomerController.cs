@@ -1,104 +1,100 @@
-﻿using CustomerService.Models;
-using CustomerService.Repo;
+using CustomerService.Models;
+using CustomerService.Models.RequestModels;
+using CustomerService.Repos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CustomerService.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Authorize]
     public class CustomerController : ControllerBase
     {
-
-        //private readonly IConfiguration _configuration;
         private readonly ICustomerRepo _customerRepo;
 
         public CustomerController(ICustomerRepo customerRepo)
         {
-            //_configuration = configuration;
             _customerRepo = customerRepo;
         }
 
         [HttpGet("GetCustomer")]
-        public async Task<ActionResult<Customer>> GetCustomerById(int id)
+        public async Task<IActionResult> GetCustomer(int id)
         {
-            var customer = await _customerRepo.GetCustomer(id);
-            if (customer!= null)
-            {
-                return customer;
-            }
-            return BadRequest("Customer not found!");
+            var customer = await _customerRepo.GetCustomerByIdAsync(id);
+            if (customer == null)
+                return NotFound();
+            return Ok(customer);
         }
 
+        [HttpGet("GetCustomerByMobile")]
+        public async Task<IActionResult> GetCustomerByMobile(string mobile)
+        {
+            var customer = await _customerRepo.GetCustomerByMobileAsync(mobile);
+            if (customer == null)
+                return NotFound();
+            return Ok(customer);
+        }
 
-        [HttpPost("CreateCustomer")]
-        public async Task<ActionResult<Customer>> CreateCustomer(string Name, string Mobile, string Email, string Address)
+        [HttpGet("GetCustomers")]
+        public async Task<IActionResult> GetCustomers()
+        {
+            var customers = await _customerRepo.GetAllCustomersAsync();
+            return Ok(customers);
+        }
+
+        [HttpPost("AddCustomer")]
+        public async Task<IActionResult> AddCustomer([FromBody] AddCustomerRequestModel request)
         {
             var customer = new Customer
             {
-                CustomerName = Name,
-                CustomerMobile = Mobile,
-                CustomerEmail = Email,
-                CustomerAddress = Address
+                CustomerName = request.CustomerName,
+                CustomerMobile = request.CustomerMobile,
+                CustomerEmail = request.CustomerEmail,
+                CustomerAddress = request.CustomerAddress,
+                Status = "Activate"
             };
-            var existingCustomer = await _customerRepo.GetCustomer(customer.CustomerId);
-            if (existingCustomer != null)
-            {
-                return BadRequest("Customer already exists.");
-            }
 
-            var custom = await _customerRepo.CreateCustomer(customer);
-            return custom;
+            var result = await _customerRepo.AddCustomerAsync(customer);
+            return CreatedAtAction(nameof(GetCustomer), new { id = result.CustomerId }, result);
         }
 
-
-        [HttpPut("UpdateCustomer")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Customer>> UpdateCustomer(int CustomerId,string? Name=null, string? Mobile=null, string? Email = null, string? Address = null)
+        [HttpPut("UpdateCustomer/{id}")]
+        public async Task<IActionResult> UpdateCustomer(int id, [FromBody] AddCustomerRequestModel request)
         {
             var customer = new Customer
             {
-                CustomerId = CustomerId,
-                CustomerName = Name,
-                CustomerMobile = Mobile,
-                CustomerEmail = Email,
-                CustomerAddress = Address
+                CustomerId = id,
+                CustomerName = request.CustomerName,
+                CustomerMobile = request.CustomerMobile,
+                CustomerEmail = request.CustomerEmail,
+                CustomerAddress = request.CustomerAddress
             };
-            var custom = await _customerRepo.UpdateCustomer(customer.CustomerId, customer);
-            if (custom != null)
-            {
-                return custom;
-            }
-            return BadRequest("Customer could not update!! Either Deactivated or Customer Not Found!!! ");
+
+            var result = await _customerRepo.UpdateCustomerAsync(customer);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
         }
 
-        [HttpDelete("DeleteCustomer")]
+        [HttpDelete("DeleteCustomer/{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<bool>> DeleteCustomer(int id)
+        public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var res = await _customerRepo.DeleteCustomer(id);
-            if (!res)
-            {
-                return BadRequest("Customer could not delete or Not available");
-            }
-            return Ok("Delete Successfully");
+            var result = await _customerRepo.DeactivateCustomerAsync(id);
+            if (!result)
+                return NotFound();
+            return NoContent();
         }
 
-        [HttpPatch("ActivateCustomer")]
+        [HttpPost("ActivateCustomer/{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Customer>> ActivateCustomer(int CustomerId)
+        public async Task<IActionResult> ActivateCustomer(int id)
         {
-            var custom = await _customerRepo.ActivateCustomer(CustomerId);
-            if (custom != null)
-            {
-                return custom;
-            }
-            return BadRequest("Failed!! Enter correct id or Customer already activated !!");
+            var result = await _customerRepo.ActivateCustomerAsync(id);
+            if (!result)
+                return NotFound();
+            return Ok();
         }
     }
 }

@@ -1,85 +1,108 @@
-using AuthService.Repo;
 using AuthService.DBContext;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using AuthService.Middleware;
+using AuthService.Repos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AuthDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDbConnection"))
-    );
 
+// Add DbContext
+builder.Services.AddDbContext<AuthDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")));
+
+// Dependency Injection
 builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-#region Validation
-/*builder.Services.AddSwaggerGen(
-    option =>
+
+// Swagger with JWT support
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        option.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
-        option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        Title = "AuthService API",
+        Version = "v1",
+        Description = "Authentication Service API",
+        Contact = new OpenApiContact
         {
-            In = ParameterLocation.Header,
-            Description = "Please enter a valid token",
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            BearerFormat = "JWT",
-            Scheme = "Bearer"
-        });
-        option.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type=ReferenceType.SecurityScheme,
-                        Id="Bearer"
-                    }
-                },
-                Array.Empty<string>()
-            }
-        });
-    }
-);
-*/
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(builder.Configuration.GetSection("JWTToken:Token").Value)),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
+            Name = "Banking System Support",
+            Email = "support@bankingsystem.com"
+        }
     });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter JWT with Bearer into field. Example: 'Bearer {token}'",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
-
-#endregion
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        //ClockSkew = TimeSpan.Zero,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is not configured")))
+    };
+});
 
 var app = builder.Build();
 
-app.UseCors(options =>
-{
-    options.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
+app.UseCors(option =>
+    option.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
 
+// Global Exception Handling
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(c =>
+    {
+        c.SerializeAsV2 = false;  // Use OpenAPI 3.0
+    });
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth Service API V1");
+    });
 }
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

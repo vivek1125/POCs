@@ -2,107 +2,97 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Net.Http.Headers;
 using System.Text;
-using TransactionService.ApiServices;
-using TransactionService.DBContext;
-using TransactionService.Repo;
+using TransactionService.APIServices;
+using TransactionService.Configuration;
+using TransactionService.Data;
+using TransactionService.Middleware;
+using TransactionService.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Swagger with JWT support
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "TransactionService API",
+        Version = "v1",
+        Description = "Transaction Service API",
+        Contact = new OpenApiContact
+        {
+            Name = "Banking System Support",
+            Email = "support@bankingsystem.com"
+        }
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter JWT with Bearer into field. Example: 'Bearer {token}'",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+// JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is not configured")))
+    };
+});
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<TransactionDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TransactionDbConnection"))
-    );
+
+// Add DbContext
+builder.Services.AddDbContext<TransactionDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TransactionDB")));
+
+// Configure Services
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<JwtExceptionFilter>();
+});
+
+builder.Services.AddScoped<ITransactionRepo, TransactionRepo>();
+builder.Services.AddHttpClient<AccountApiClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["Services:AccountServiceUrl"]!);
+});
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddEndpointsApiExplorer();
-
-#region Validation 
-builder.Services.AddSwaggerGen(
-    option =>
-    {
-        option.SwaggerDoc("v1", new OpenApiInfo { Title = "Transaction API", Version = "v1" });
-        option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            In = ParameterLocation.Header,
-            Description = "Please enter a valid token",
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            BearerFormat = "JWT",
-            Scheme = "Bearer"
-        });
-        option.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type=ReferenceType.SecurityScheme,
-                        Id="Bearer"
-                    }
-                },
-                Array.Empty<string>()
-            }
-        });
-    }
-);
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(builder.Configuration.GetSection("JWTToken:Token").Value)),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidIssuer = builder.Configuration.GetSection("JWTToken:Issuer").Value,
-            ValidAudience = builder.Configuration.GetSection("JWTToken:Audience").Value
-
-        };
-    });
-
-#endregion
-
-
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddHttpClient<IAccountApiClient, AccountApiClient>(client =>
-    {
-        client.BaseAddress = new Uri(builder.Configuration["AccountApi:BaseAddress"]);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-    }).ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        var handler = new HttpClientHandler();
-        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-        return handler;
-    });
-}
-else
-{
-    builder.Services.AddHttpClient<IAccountApiClient, AccountApiClient>(client =>
-    {
-        client.BaseAddress = new Uri(builder.Configuration["AccountApi:BaseAddress"]);
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-    });
-}
-builder.Services.AddScoped<ITransRepo, TransRepo>();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors(options =>
-{
-    options.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
+// Configure CORS
+app.UseCors(option =>
+    option.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -113,6 +103,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

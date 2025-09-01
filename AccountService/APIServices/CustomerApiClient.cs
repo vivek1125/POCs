@@ -1,33 +1,48 @@
-﻿using AccountService.Models;
+using AccountService.Models;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace AccountService.ApiServices
+namespace AccountService.APIServices
 {
-    public class CustomerApiClient : ICustomerApiClient
+    public class CustomerApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomerApiClient(HttpClient httpClient,IConfiguration configuration)
+        public CustomerApiClient(HttpClient httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-        }
-
-        public async Task SetJwtToken(string jwtToken)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwtToken);
+            _httpContextAccessor = httpContextAccessor;
+            _httpClient.BaseAddress = new Uri(_configuration["Services:CustomerService"] ?? 
+                throw new InvalidOperationException("CustomerService URL not configured"));
         }
 
         public async Task<Customer?> GetCustomerAsync(int customerId)
         {
-            var response = await _httpClient.GetAsync($"/api/Customer/GetCustomer?id={customerId}");
-            if (!response.IsSuccessStatusCode) return null;
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<Customer>(content, new JsonSerializerOptions
+            // Forward the authorization token
+            var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"]
+                .FirstOrDefault()?.Split(" ").Last();
+            
+            if (token != null)
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.GetAsync($"api/Customer/GetCustomer?id={customerId}");
+            
+            if (response.IsSuccessStatusCode)
             {
-                PropertyNameCaseInsensitive = true
-            });
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<Customer>(content, new JsonSerializerOptions 
+                { 
+                    PropertyNameCaseInsensitive = true 
+                });
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                return null;
+
+            throw new HttpRequestException($"Error getting customer: {response.StatusCode}");
         }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccountService.Migrations
 {
-    [DbContext(typeof(AccountDBContext))]
-    partial class AccountDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AccountDbContext))]
+    partial class AccountDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -30,28 +30,27 @@ namespace AccountService.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountNumber"), 900123L);
 
-                    b.Property<DateTime>("AccUpdateDateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<decimal>("AccountBalance")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("AccountStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("AccountType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("Bank")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("AccountUpdateOn")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsFrozen")
-                        .HasColumnType("bit");
 
                     b.HasKey("AccountNumber");
 

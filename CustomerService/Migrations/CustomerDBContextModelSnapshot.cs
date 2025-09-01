@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CustomerService.Migrations
 {
-    [DbContext(typeof(CustomerDBContext))]
-    partial class CustomerDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(CustomerDbContext))]
+    partial class CustomerDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -45,7 +45,7 @@ namespace CustomerService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerStatus")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -1,69 +1,115 @@
-using APIGateway.config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using MMLib.SwaggerForOcelot.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Provider.Polly;
 using System.Text;
+using APIGateway.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var routes = "Routes";
+// Add configuration for Ocelot - environment specific
+var environment = builder.Environment.EnvironmentName;
+builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile($"ocelot.{environment}.json", optional: true, reloadOnChange: true);
 
-builder.Configuration.AddOcelotWithSwaggerSupport(options =>
-{
-    options.Folder = routes;
-});
+// Add services to the container
+builder.Services.AddControllers();
 
-builder.Services.AddOcelot(builder.Configuration).AddPolly();
+// Add Ocelot
+builder.Services.AddOcelot(builder.Configuration);
+
+// Add Swagger for Ocelot
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
-var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
-    .AddOcelot(routes, builder.Environment)
-    .AddEnvironmentVariables();
+// Add JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] 
+                ?? throw new InvalidOperationException("Jwt:Key is not configured")))
+        };
+    });
 
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-
-// Swagger for ocelot
-//builder.Services.AddSwaggerGen();
-
+// Add CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
-    builder.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader());
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Add global exception handling
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(opt => opt.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi2_0);
-    //app.UseSwagger();
+    app.UseSwaggerForOcelotUI(opt =>
+    {
+        opt.PathToSwaggerGenerator = "/swagger/docs";
+        opt.ReConfigureUpstreamSwaggerJson = AlterUpstreamSwaggerJson;
+    });
 }
-
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+// Enable CORS
+app.UseCors();
 
-app.UseSwaggerForOcelotUI(options =>
-{
-    options.PathToSwaggerGenerator = "/swagger/docs";
-    options.ReConfigureUpstreamSwaggerJson = AlterUpstream.AlterUpstreamSwaggerJson;
+// Enable Authentication
+app.UseAuthentication();
 
-}).UseOcelot().Wait();
-
+// Map health controllers
 app.MapControllers();
 
+// Use Ocelot middleware
+await app.UseOcelot();
+
 app.Run();
+
+/// <summary>
+/// Reconfigure upstream swagger json to include the API Gateway base URL
+/// </summary>
+/// <param name="context">HTTP context</param>
+/// <param name="swaggerJson">Original swagger json</param>
+/// <returns>Modified swagger json</returns>
+static string AlterUpstreamSwaggerJson(HttpContext context, string swaggerJson)
+{
+    try
+    {
+        if (string.IsNullOrWhiteSpace(swaggerJson))
+            return swaggerJson;
+
+        var swagger = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(swaggerJson);
+        
+        if (swagger == null)
+            return swaggerJson;
+        
+        // Update the servers to point to the API Gateway
+        swagger.servers = new[]
+        {
+            new { url = "https://localhost:7210", description = "API Gateway" }
+        };
+        
+        return Newtonsoft.Json.JsonConvert.SerializeObject(swagger, Newtonsoft.Json.Formatting.Indented);
+    }
+    catch (Exception)
+    {
+        // If there's any error in processing, return the original swagger JSON
+        return swaggerJson;
+    }
+}

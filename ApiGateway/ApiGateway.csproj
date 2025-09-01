@@ -7,18 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ocelot" Version="23.2.2" />
+    <PackageReference Include="MMLib.SwaggerForOcelot" Version="7.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-    <PackageReference Include="MMLib.SwaggerForOcelot" Version="8.0.0" />
-    <PackageReference Include="Ocelot" Version="24.0.0" />
-    <PackageReference Include="Ocelot.Provider.Polly" Version="24.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Routes\" />
-  </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

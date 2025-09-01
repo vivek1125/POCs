@@ -1,84 +1,119 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TransactionService.ApiServices;
-using TransactionService.Common;
-using TransactionService.DBContext;
-using TransactionService.Models;
+using AccountService.Exceptions;
+using TransactionService.APIServices;
 using TransactionService.Models.ResponseModels;
-using TransactionService.Repo;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using TransactionService.Models.Exceptions;
+using TransactionService.Repos;
+using TransactionService.Models.RequestModels;
 
 namespace TransactionService.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Authorize]
     public class TransactionController : ControllerBase
     {
-        private readonly ITransRepo _transactionRepo;
-        private readonly IConfiguration _configuration;
-        private readonly int limitDebit = 100000;
-        public TransactionController(IConfiguration configuration, ITransRepo transactionRepo)
+        private readonly ITransactionRepo _transactionRepo;
+        private readonly AccountApiClient _accountApiClient;
+
+        public TransactionController(ITransactionRepo transactionRepo, AccountApiClient accountApiClient)
         {
-            _configuration = configuration;
             _transactionRepo = transactionRepo;
+            _accountApiClient = accountApiClient;
         }
 
-        [HttpGet("LastFiveTransaction")]
-        public async Task<ActionResult<IEnumerable<TransactionResponse>>> GetTransaction(int accountNumber)
+        [HttpGet("GetTransactionByDateRange")]
+        public async Task<ActionResult<IEnumerable<TransactionResponseModel>>> GetTransactions(
+            int accountNumber,
+            DateTime? fromDate = null,
+            DateTime? toDate = null)
         {
-            var transaction = await _transactionRepo.GetTransaction(accountNumber);
-            if (transaction.Count!=0)
+            var transactions = await _transactionRepo.GetTransactionsAsync(accountNumber, fromDate, toDate);
+            var response = transactions.Select(t => new TransactionResponseModel
             {
-                var trans = transaction.Select(trans => new TransactionResponse
-                {
-                    TransactionId = trans.TransactionId,
-                    AccountNumber = trans.AccountNumber,
-                    TransactionAmount = trans.TransactionAmount,
-                    TransactionMode = Enum.GetName(typeof(TransactionMode), trans.TransactionMode),
-                    TransactionType = Enum.GetName(typeof(TransactionType), trans.TransactionType),
-                    TransDateTime = trans.TransDateTime
-                });
-                return Ok(trans);
-            }
-            return BadRequest("Transaction Failed. Please check the account number");
+                TransactionId = t.TransactionId,
+                AccountNumber = t.AccountNumber,
+                TransactionAmount = t.TransactionAmount,
+                TransactionMode = t.TransactionMode.ToString(),
+                TransactionType = t.TransactionType.ToString(),
+                TransactionOn = t.TransactionOn,
+                Status = t.Status.ToString(),
+                UpdatedBalance = t.TransactionAmount // or set as needed
+            });
+
+            return Ok(response);
         }
 
-        [HttpPatch("UpdateBalance")]
-        public async Task<ActionResult<Transaction>> UpdateBalance(int accountNumber, decimal balance,string transactionType, string transactionMode)
+        [HttpPost("UpdateBalance")]
+        public async Task<ActionResult<TransactionResponseModel>> ProcessTransaction(
+            [FromBody] TransactionRequestModel request)
         {
-            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            if (balance != 0)
+            // Validate TransactionType and TransactionMode input
+            if (!request.IsValidTransactionType())
+                return BadRequest($"Invalid TransactionType: {request.TransactionType}");
+            if (!request.IsValidTransactionMode())
+                return BadRequest($"Invalid TransactionMode: {request.TransactionMode}");
+
+            try
             {
-                if (Enum.TryParse(transactionType, true, out TransactionType parsedType) && 
-                    Enum.IsDefined(typeof(TransactionType), parsedType) &&
-                    Enum.TryParse(transactionMode, true, out TransactionMode parsedMode) &&
-                    Enum.IsDefined(typeof(TransactionMode), parsedMode)
-                    )
+                var currentBalance = await _accountApiClient.GetBalanceAsync(request.AccountNumber);
+                var response = await _transactionRepo.ProcessTransactionAsync(request, currentBalance);
+                // Map to ResponseModels.TransactionResponseModel
+                var result = new TransactionResponseModel
                 {
-                    if(TransactionType.Debit == parsedType && balance > limitDebit)
-                    {
-                        return BadRequest("Transaction Failed !! (Debit limit : 1,00,000)");
-                    }
-                    var trans = await _transactionRepo.UpdateAmount(accountNumber, balance, parsedType, parsedMode,jwtToken);
-                    if (trans != null)
-                    {
-                        var transaction = new TransactionResponse
-                        {
-                            TransactionId = trans.TransactionId,
-                            AccountNumber = trans.AccountNumber,
-                            TransactionAmount = trans.TransactionAmount,
-                            TransactionMode = Enum.GetName(typeof(TransactionMode), trans.TransactionMode),
-                            TransactionType = Enum.GetName(typeof(TransactionType), trans.TransactionType),
-                            TransDateTime = trans.TransDateTime
-                        };
-                        return Ok(transaction);
-                    }
-                }
-                
+                    TransactionId = response.TransactionId,
+                    AccountNumber = response.AccountNumber,
+                    TransactionAmount = response.TransactionAmount,
+                    TransactionMode = response.TransactionMode,
+                    TransactionType = response.TransactionType,
+                    TransactionOn = response.TransactionOn,
+                    Status = response.Status,
+                    UpdatedBalance = response.UpdatedBalance
+                };
+                return Ok(result);
             }
-            return BadRequest("Transaction Failed !");
+            catch (InvalidBalanceException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidTransactionAmountException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (TransactionFailedException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing the transaction");
+            }
+        }
+
+        [HttpGet("GetLastNTransaction")]
+        public async Task<ActionResult<IEnumerable<TransactionResponseModel>>> GetLastNTransactions(
+            int count,
+            int accountNumber)
+        {
+            if (count <= 0)
+            {
+                return BadRequest("Count must be greater than 0");
+            }
+
+            var transactions = await _transactionRepo.GetLastNTransactionsAsync(accountNumber, count);
+            var response = transactions.Select(t => new TransactionResponseModel
+            {
+                TransactionId = t.TransactionId,
+                AccountNumber = t.AccountNumber,
+                TransactionAmount = t.TransactionAmount,
+                TransactionMode = t.TransactionMode.ToString(),
+                TransactionType = t.TransactionType.ToString(),
+                TransactionOn = t.TransactionOn,
+                Status = t.Status.ToString()
+            });
+
+            return Ok(response);
         }
     }
 }

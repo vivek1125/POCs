@@ -1,69 +1,48 @@
-﻿using AuthService.Repo;
-using AuthService.DBContext;
 using AuthService.Models;
 using AuthService.Models.RequestModels;
-using AuthService.Models.ResponseModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using AuthService.Repos;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AuthService.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IAuthRepo _authRepo;
-
-        public AuthController(IConfiguration configuration,IAuthRepo authRepo)
+        public AuthController(IAuthRepo authRepo)
         {
-            _configuration = configuration;
             _authRepo = authRepo;
         }
 
-        [HttpGet("getUser")]
-        public async Task<ActionResult<LogInRes>> GetUserByUserName(string userName)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest dto)
         {
-            var existingUser = await _authRepo.GetUser(userName);
-            if(existingUser == null)
-            {
-                return BadRequest("User Not Found!");
-            }
-            UserRole userRole = existingUser.Role;
-            string userRolestr = Enum.GetName(typeof(UserRole), userRole);
-            var res = new LogInRes
-            {
-                UserName = existingUser.UserName,
-                Email = existingUser.Email,
-                Role = userRolestr,//.ToString()
-                Token = "*********************"
-            };
-
-            return Ok(res);
+            var user = await _authRepo.AuthenticateAsync(dto.UserName, dto.Password);
+            if (user == null)
+                return Unauthorized("Invalid credentials");
+            var token = await _authRepo.GenerateJwtTokenAsync(user);
+            return Ok(new { user.UserName, user.Email, user.Role, Token = token });
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(Registration registration)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest dto)
         {
-            User newUser = await _authRepo.Register(registration);
-
-            if (newUser == null)
-            {
-                return BadRequest("User Already Reagistred");
-            }
-
-            return Ok(newUser);
+            var user = await _authRepo.RegisterAsync(dto.UserName, dto.Email, dto.Password, dto.Role);
+            if (user == null)
+                return BadRequest("Registration failed. User may already exist or role is invalid.");
+            return Ok(new { user.UserName, user.Email, user.Role });
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<LogInRes>> Login(LogInReq logInReq)
+        [HttpGet("users")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllUsers()
         {
-            LogInRes logInRes = await _authRepo.Login(logInReq);
-
-            return Ok(logInRes);
+            var users = await _authRepo.GetAllUsersAsync();
+            return Ok(users.Select(u => new { u.Id, u.UserName, u.Email, u.Role }));
         }
-
     }
 }

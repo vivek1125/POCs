@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TransactionService.DBContext;
+using TransactionService.Data;
 
 #nullable disable
 
 namespace TransactionService.Migrations
 {
-    [DbContext(typeof(TransactionDBContext))]
-    partial class TransactionDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(TransactionDbContext))]
+    partial class TransactionDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace TransactionService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TransactionService.Models.Transaction", b =>
+            modelBuilder.Entity("TransactionService.Models.Entities.TransactionEntity", b =>
                 {
                     b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd()
@@ -31,19 +31,26 @@ namespace TransactionService.Migrations
                     b.Property<int>("AccountNumber")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TransDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<decimal>("TransactionAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TransactionMode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("TransactionOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TransactionType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("TransactionId");
 

@@ -1,4 +1,4 @@
-﻿namespace TransactionService.Common
+namespace TransactionService.Common
 {
     public enum TransactionType
     {

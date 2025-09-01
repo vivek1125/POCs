@@ -1,4 +1,4 @@
-﻿namespace AccountService.Models
+namespace AccountService.Models
 {
     public enum AccountType
     {

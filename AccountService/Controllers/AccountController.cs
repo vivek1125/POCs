@@ -1,108 +1,119 @@
-﻿using AccountService.ApiServices;
+using AccountService.APIServices;
 using AccountService.Models;
+using AccountService.Models.DTOs;
 using AccountService.Models.RequestModels;
-using AccountService.Models.ResponseModels;
-using AccountService.Repo;
+using AccountService.Repos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Principal;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AccountService.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Authorize]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountRepo _accountrepo;
-        private readonly IConfiguration _configuration;
+        private readonly IAccountRepo _accountRepo;
+        private readonly CustomerApiClient _customerApiClient;
 
-        public AccountController(IConfiguration configuration, IAccountRepo accountRepo)
+        public AccountController(IAccountRepo accountRepo, CustomerApiClient customerApiClient)
         {
-            _configuration = configuration;
-            _accountrepo = accountRepo;
+            _accountRepo = accountRepo;
+            _customerApiClient = customerApiClient;
         }
 
-        [HttpGet("getAccount")]
-        public async Task<ActionResult<Account>> GetAccountByNumber(int accountNumber)
+        [HttpGet("GetAccountByAccountNumber")]
+        public async Task<IActionResult> GetAccount(int accountNumber)
         {
-            var account = await _accountrepo.GetAccountDetails(accountNumber);
-            if (account != null)
+            var account = await _accountRepo.GetAccountByNumberAsync(accountNumber);
+            if (account == null)
+                return NotFound();
+            return Ok(account);
+        }
+
+        [HttpGet("GetAccountDetailsByNoOrCustID")]
+        public async Task<IActionResult> GetAccountDetails(int accountNumberOrId)
+        {
+            var accountDetails = await _accountRepo.GetAccountWithCustomerDetailsAsync(accountNumberOrId);
+            if (accountDetails == null)
+                return NotFound();
+            return Ok(accountDetails);
+        }
+
+        [HttpGet("GetAllAccounts")]
+        public async Task<IActionResult> GetAllAccounts()
+        {
+            var accounts = await _accountRepo.GetAllAccountsAsync();
+            return Ok(accounts);
+        }
+
+        [HttpPost("CreateAccount") ]
+        public async Task<IActionResult> CreateAccount([FromBody] AddAccountRequestModel request)
+        {
+            // Verify customer exists and is active
+            var customer = await _customerApiClient.GetCustomerAsync(request.CustomerId);
+            if (customer == null)
+                return BadRequest("Invalid CustomerId");
+            if (customer.Status != "Activate")
+                return BadRequest("Customer is not active");
+
+            var account = new Account
             {
-                return Ok(account);
-            }
-            return BadRequest("Account not found!");
+                CustomerId = request.CustomerId,
+                AccountBalance = request.InitialBalance,
+                AccountType = request.AccountType,
+                AccountStatus = AccountStatus.Activate,
+                CreatedOn = DateTime.UtcNow,
+                AccountUpdateOn = DateTime.UtcNow
+            };
+
+            var result = await _accountRepo.CreateAccountAsync(account);
+            return CreatedAtAction(nameof(GetAccount), new { accountNumber = result.AccountNumber }, result);
         }
 
-        [HttpGet("getCustomer")]
-        public async Task<ActionResult<AccountCustomerDTOs>> GetCustomerDetailsByAccNo(int account_NumberOrCust_Id)
+        // If you want balancceUpdateOn to default to DateTime.UtcNow, set it inside the method:
+        [HttpPut("UpdateBalance")]
+        public async Task<IActionResult> UpdateBalance(int accountNumber, [FromBody] UpdateBalanceRequestModel request, DateTime? balancceUpdateOn = null)
         {
-            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-
-            var customerDetail = await _accountrepo.GetCustomerDetails(account_NumberOrCust_Id, jwtToken);
-            if (customerDetail != null)
+            // Validate Authorization header
+            var authHeader = Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
-                return Ok(customerDetail);
+                return Unauthorized("Missing or invalid authorization token");
             }
-            return BadRequest("Customer No Found, Please check account no!");
+
+            // Validate account access based on claims if needed
+            // This assumes the JWT token contains relevant claims about account access
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                return Unauthorized("User is not authenticated");
+            }
+
+            var updateOn = balancceUpdateOn ?? DateTime.UtcNow;
+            var result = await _accountRepo.UpdateBalanceAsync(accountNumber, request.NewBalance, updateOn);
+            if (result == null)
+                return NotFound("Account not found or is inactive");
+            return Ok(result);
         }
 
-        [HttpPost]
+        [HttpDelete("DeleteAccount")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<AccountRes>> CreateAccount(AccountReq account)
-        {
-            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            
-            if (account != null)
-            {
-                var createdAccount = await _accountrepo.CreateAccount(account, jwtToken);
-                if (createdAccount != null)
-                {
-                    return CreatedAtAction(nameof(GetAccountByNumber), new { accountNumber = createdAccount.AccountNumber }, createdAccount);
-                }
-            }
-            return BadRequest("Failed to Create Account !!");
-        }
-
-        [HttpPatch]
-        public async Task<ActionResult<Account>> UpdateBalance(int accountNumber, decimal balance,DateTime updatedOn)
-        {
-            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            if (balance != 0)
-            {
-                var accountUpdatedBalance = await _accountrepo.UpdateAccountBalance(accountNumber,balance,updatedOn, jwtToken);
-                if (accountUpdatedBalance != null)
-                {
-                    return accountUpdatedBalance;
-                }
-            }
-            return BadRequest("failed to Update balance!");
-        }
-
-        [HttpDelete]
         public async Task<IActionResult> DeleteAccount(int accountNumber)
         {
-            bool status = await _accountrepo.DeleteAccount(accountNumber);
-            if (!status)
-            {
-                return BadRequest("Account Deletion Filed!");
-            }
-            return Ok("Account deleted!");
+            var result = await _accountRepo.DeactivateAccountAsync(accountNumber);
+            if (!result)
+                return NotFound();
+            return NoContent();
         }
 
-        [HttpPatch("UnFreeze")]
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> UnFreeze(int accountNumber)
+        [HttpPost("ActivateAccount")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ActivateAccount(int accountNumber)
         {
-            var jwtToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            var accountStatus = await _accountrepo.UpdateAccountStatus(accountNumber, jwtToken);
-            if (accountStatus)
-            {
-                return Ok("Now Account is Activate!!!");
-            }
-            return BadRequest("failed to Update Status!");
+            var result = await _accountRepo.ActivateAccountAsync(accountNumber);
+            if (!result)
+                return NotFound();
+            return Ok();
         }
     }
 }

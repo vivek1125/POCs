@@ -1,26 +1,26 @@
-﻿using AuthService.Models;
+using AuthService.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthService.DBContext
 {
-    public class AuthDBContext : DbContext
+    public class AuthDbContext : DbContext
     {
-        public AuthDBContext(DbContextOptions<AuthDBContext> options) : base(options)
-        {
-            
-        }
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .Property(usr => usr.Id)
-                .UseIdentityColumn(seed: 101, increment: 1);
-            modelBuilder.Entity<User>()
-                .Property(a => a.Role)
-                .HasConversion<string>();
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).
+                       UseIdentityColumn(seed: 101, increment:1);
+                entity.Property(e => e.UserName).IsRequired();
+                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.Password).IsRequired();
+                entity.Property(e => e.Role).IsRequired();
+            });
         }
     }
 }
