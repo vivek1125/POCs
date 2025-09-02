@@ -1,0 +1,34 @@
+{
+  "scripts": {
+    "test:all": "npm test -- --watchAll=false --testPathPattern=Test --verbose",
+    "test:login": "npm test -- --watchAll=false --testNamePattern=\"LoginSignup\" --verbose",
+    "test:signup": "npm test -- --watchAll=false --testNamePattern=\"Signup\" --verbose", 
+    "test:customer": "npm test -- --watchAll=false --testNamePattern=\"Customer\" --verbose",
+    "test:account": "npm test -- --watchAll=false --testNamePattern=\"Account\" --verbose",
+    "test:transaction": "npm test -- --watchAll=false --testNamePattern=\"Transaction\" --verbose",
+    "test:coverage": "npm test -- --coverage --watchAll=false --testPathPattern=Test",
+    "test:watch": "npm test -- --testPathPattern=Test",
+    "test:ci": "npm test -- --watchAll=false --testPathPattern=Test --ci --coverage --silent"
+  },
+  "testConfig": {
+    "setupFilesAfterEnv": ["<rootDir>/src/Test/setupTests.ts"],
+    "testMatch": [
+      "<rootDir>/src/Test/**/*.test.{js,jsx,ts,tsx}"
+    ],
+    "collectCoverageFrom": [
+      "src/pages/**/*.{js,jsx,ts,tsx}",
+      "src/components/**/*.{js,jsx,ts,tsx}",
+      "src/context/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
+  "description": "Test configuration and scripts for Bank Management System frontend tests"
+}
