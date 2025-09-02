@@ -5,7 +5,6 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import LoginSignup from './pages/Login';
-// ...existing code...
 import Customer from './pages/Customer';
 import Account from './pages/Account';
 import Transaction from './pages/Transaction';
