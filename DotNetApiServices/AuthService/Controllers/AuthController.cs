@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace AuthService.Controllers
 {
@@ -43,6 +44,19 @@ namespace AuthService.Controllers
         {
             var users = await _authRepo.GetAllUsersAsync();
             return Ok(users.Select(u => new { u.Id, u.UserName, u.Email, u.Role }));
+        }
+
+        [HttpPost("logout")]
+        [Authorize]
+        public IActionResult Logout()
+        {
+            var userName = User?.Identity?.Name;
+            if (string.IsNullOrEmpty(userName))
+            {
+                userName = User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "unique_name")?.Value;
+            }
+
+            return Ok(new { Message = "Logged out successfully. Please remove token on client side.", User = userName });
         }
     }
 }
