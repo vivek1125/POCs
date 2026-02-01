@@ -1,0 +1,1755 @@
+{
+	"info": {
+		"_postman_id": "a3fb8553-b41f-4fd7-b601-da74afeb5970",
+		"name": "BankingSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38347848"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "LogIn",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqMiIsImVtYWlsIjoidnJhakBlbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoidnJhajIiLCJleHAiOjE3Njk5ODMxNDIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.QCEd0VsLvcnRXwwwhRbK4gyEpd9hKsIXxWf1nzS9uoc"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7201"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7201/swagger/index.html"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"vraj2\",\n  \"password\": \"vvv\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7201/api/Auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7201",
+							"path": [
+								"api",
+								"Auth",
+								"login"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7201/api/Auth/login' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqMiIsImVtYWlsIjoidnJhakBlbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoidnJhajIiLCJleHAiOjE3Njk5ODMxNDIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.QCEd0VsLvcnRXwwwhRbK4gyEpd9hKsIXxWf1nzS9uoc' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7201' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7201/swagger/index.html' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"userName\": \"vraj2\",\\n  \"password\": \"vvv\"\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7201"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7201/swagger/index.html"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"vivek\",\n  \"email\": \"vivek@email.com\",\n  \"password\": \"vivek\",\n  \"role\": \"Admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7201/api/Auth/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7201",
+							"path": [
+								"api",
+								"Auth",
+								"register"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7201/api/Auth/register' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7201' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7201/swagger/index.html' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"userName\": \"string\",\\n  \"email\": \"string\",\\n  \"password\": \"string\",\\n  \"role\": \"string\"\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "AllUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7201"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7201/swagger/index.html"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7201/api/Auth/users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7201",
+							"path": [
+								"api",
+								"Auth",
+								"users"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7201/api/Auth/register' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7201' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7201/swagger/index.html' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"userName\": \"string\",\\n  \"email\": \"string\",\\n  \"password\": \"string\",\\n  \"role\": \"string\"\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "LogOut",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ"
+							},
+							{
+								"key": "Referer",
+								"value": "https://localhost:7201/swagger/index.html"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7201/api/Auth/logout",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7201",
+							"path": [
+								"api",
+								"Auth",
+								"logout"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7201/api/Auth/logout' \\\r\n  -X 'POST' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODM2OTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.liASHt8ULf_vxNdcoqV6sGUkMTrhUULAq1sB9zLxDaQ' \\\r\n  -H 'Referer: https://localhost:7201/swagger/index.html' \\\r\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  -H 'accept: */*' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "GetAllAccounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Account/GetAllAccounts",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Account",
+								"GetAllAccounts"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Account/GetAllAccounts' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "AccountByA/CNumber",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "CreateAccount",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": 2101,\n  \"initialBalance\": 5000,\n  \"accountType\": \"Saving\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7210/api/Account/CreateAccount",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Account",
+								"CreateAccount"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Account/CreateAccount' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"customerId\": 2101,\\n  \"initialBalance\": 5000,\\n  \"accountType\": \"Saving\"\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllAccounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Account/GetAllAccounts",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Account",
+								"GetAllAccounts"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Account/GetAllAccounts' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "GetAccountDetailsByNoOrCustID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Account/GetAccountDetailsByNoOrCustID?accountNumberOrId=900123",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Account",
+								"GetAccountDetailsByNoOrCustID"
+							],
+							"query": [
+								{
+									"key": "accountNumberOrId",
+									"value": "900123"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Account/GetAccountDetailsByNoOrCustID?accountNumberOrId=900123' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBalance",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newBalance\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7210/api/Account/UpdateBalance?accountNumber=900123",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Account",
+								"UpdateBalance"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "900123"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Account/UpdateBalance?accountNumber=900123' \\\r\n  -X 'PUT' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"newBalance\": 0\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAccount",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Account/DeleteAccount?accountNumber=900123",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Account",
+								"DeleteAccount"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "900123"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Account/DeleteAccount?accountNumber=900123' \\\r\n  -X 'DELETE' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "ActivateAccount",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Account/ActivateAccount?accountNumber=900123",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Account",
+								"ActivateAccount"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "900123"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Account/ActivateAccount?accountNumber=900123' \\\r\n  -X 'POST' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'content-length: 0' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Account%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "AddCustomer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"vivek\",\n  \"customerMobile\": \"9988776655\",\n  \"customerEmail\": \"vivek@email.com\",\n  \"customerAddress\": \"Noida\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7210/api/Customer/AddCustomer",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Customer",
+								"AddCustomer"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Customer/AddCustomer' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"customerName\": \"vivek\",\\n  \"customerMobile\": \"9988776655\",\\n  \"customerEmail\": \"vivek@email.com\",\\n  \"customerAddress\": \"Noida\"\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllCustomers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Customer/GetCustomers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Customer",
+								"GetCustomers"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Customer/GetCustomers' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerByMobile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Customer/GetCustomerByMobile?mobile=9988776655",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Customer",
+								"GetCustomerByMobile"
+							],
+							"query": [
+								{
+									"key": "mobile",
+									"value": "9988776655"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Customer/GetCustomerByMobile?mobile=9988776655' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomer by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Customer/GetCustomer?id=2101",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Customer",
+								"GetCustomer"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2101"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Customer/GetCustomer?id=2101' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCustomer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"string\",\n  \"customerMobile\": \"string\",\n  \"customerEmail\": \"string\",\n  \"customerAddress\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7210/api/Customer/UpdateCustomer/2101",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Customer",
+								"UpdateCustomer",
+								"2101"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Customer/UpdateCustomer/2101' \\\r\n  -X 'PUT' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"customerName\": \"string\",\\n  \"customerMobile\": \"string\",\\n  \"customerEmail\": \"string\",\\n  \"customerAddress\": \"string\"\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCustomer-deactivate",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Customer/DeleteCustomer/2101",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Customer",
+								"DeleteCustomer",
+								"2101"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Customer/DeleteCustomer/2101' \\\r\n  -X 'DELETE' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "ActivateCustomer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Customer/ActivateCustomer/2101",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Customer",
+								"ActivateCustomer",
+								"2101"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Customer/ActivateCustomer/2101' \\\r\n  -X 'POST' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'content-length: 0' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Customer%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "GetTransactionByDateRange",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Transaction%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Transaction/GetTransactionByDateRange?accountNumber=900123&fromDate=12-12-2025&toDate=12-02-2026",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Transaction",
+								"GetTransactionByDateRange"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "900123"
+								},
+								{
+									"key": "fromDate",
+									"value": "12-12-2025"
+								},
+								{
+									"key": "toDate",
+									"value": "12-02-2026"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Transaction/GetTransactionByDateRange?accountNumber=900123&fromDate=12-12-2025&toDate=12-02-2026' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Transaction%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBalance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://localhost:7210"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Transaction%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountNumber\": 900123,\n  \"transactionAmount\": 100000,\n  \"transactionMode\": \"UPI\",\n  \"transactionType\": \"Credit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7210/api/Transaction/UpdateBalance",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Transaction",
+								"UpdateBalance"
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Transaction/UpdateBalance' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://localhost:7210' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Transaction%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36' \\\r\n  --data-raw $'{\\n  \"accountNumber\": 900123,\\n  \"transactionAmount\": 100000,\\n  \"transactionMode\": \"UPI\",\\n  \"transactionType\": \"Credit\"\\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "GetLastNTransaction",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9,hi;q=0.8"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://localhost:7210/swagger/index.html?urls.primaryName=Transaction%20Service%20API%20V1%20-%20v1"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7210/api/Transaction/GetLastNTransaction?count=5&accountNumber=900123",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7210",
+							"path": [
+								"api",
+								"Transaction",
+								"GetLastNTransaction"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "5"
+								},
+								{
+									"key": "accountNumber",
+									"value": "900123"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl 'https://localhost:7210/api/Transaction/GetLastNTransaction?count=5&accountNumber=900123' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2cmFqIiwiZW1haWwiOiJ2cmFqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJVc2VyTmFtZSI6InZyYWoiLCJleHAiOjE3Njk5ODg4MjYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzIwMS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyMDEvIn0.JlH3TY8jMmagS-dPoIy9s658QrDyei8nyKpUOX28hCo' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://localhost:7210/swagger/index.html?urls.primaryName=Transaction%20Service%20API%20V1%20-%20v1' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
