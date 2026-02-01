@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AccountService.Migrations
 {
     /// <inheritdoc />
-    public partial class initialAccount : Migration
+    public partial class initianAccount : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
