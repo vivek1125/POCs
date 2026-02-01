@@ -46,7 +46,7 @@ namespace AuthService.Controllers
             return Ok(users.Select(u => new { u.Id, u.UserName, u.Email, u.Role }));
         }
 
-        // TODO :  Logout endpoint created, Busness logic not yet implemented.
+        // TODO :  Logout endpoint created, Busness logic not yet implemented. 
         [HttpPost("logout")]
         [Authorize]
         public IActionResult Logout()
